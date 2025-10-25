@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema PDV - Mercadinho Morezine</title>
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="login-screen" class="screen">
+        <div class="login-container">
+            <img src="img/download.jpg" alt="Logo Mercadinho" class="logo-login" />
+            <h2>Mercadinho Morezine</h2>
+            <h3>Sistema PDV</h3>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Usuário:</label>
+                    <input type="text" id="username" placeholder="Digite admin" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sistema Principal -->
+    <div id="main-system" class="screen hidden">
+        <div class="container">
+            <!-- Sidebar / Menu -->
+            <div class="sidebar">
+                <div class="logo">
+                    <img src="img/download.jpg" alt="Logo Mercadinho" class="logo-sidebar" />
+                    <h2>Mercadinho Morezine</h2>
+                </div>
+                <ul class="menu">
+                    <li class="active" data-page="pdv"><i class="fas fa-cash-register"></i> Frente de Caixa</li>
+                    <li data-page="estoque"><i class="fas fa-boxes"></i> Estoque</li>
+                    <li data-page="relatorios"><i class="fas fa-chart-bar"></i> Relatórios</li>
+                    <li data-page="configuracoes"><i class="fas fa-cog"></i> Configurações</li>
+                    <li id="logout"><i class="fas fa-sign-out-alt"></i> Sair</li>
+                </ul>
+            </div>
+
+            <!-- Conteúdo Principal -->
+            <div class="main-content">
+                <!-- Página PDV -->
+                <div class="page active" id="pdv-page">
+                    <h1>Frente de Caixa</h1>
+                    <div class="pdv-container">
+                        <div class="pdv-left">
+                            <div class="product-search">
+                                <input type="text" id="product-search" placeholder="Código de barras ou nome do produto">
+                                <button id="search-btn"><i class="fas fa-search"></i></button>
+                                <button id="balanca-btn" title="Produto com Balança"><i class="fas fa-weight"></i></button>
+                            </div>
+                            <div class="cart-items">
+                                <table id="cart-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Produto</th>
+                                            <th>Qtd</th>
+                                            <th>Preço</th>
+                                            <th>Subtotal</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cart-body">
+                                        <!-- Itens do carrinho serão adicionados aqui -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="pdv-right">
+                            <div class="total-panel">
+                                <div class="total-info">
+                                    <h2>Total da Compra</h2>
+                                    <div class="total-value" id="total-value">R$ 0,00</div>
+                                </div>
+                                <div class="payment-methods">
+                                    <h3>Forma de Pagamento</h3>
+                                    <div class="payment-options">
+                                        <button class="payment-btn" data-method="dinheiro">Dinheiro</button>
+                                        <button class="payment-btn" data-method="cartao-debito">Cartão Débito</button>
+                                        <button class="payment-btn" data-method="cartao-credito">Cartão Crédito</button>
+                                        <button class="payment-btn" data-method="pix">PIX</button>
+                                    </div>
+                                </div>
+                                <div class="action-buttons">
+                                    <button id="finalizar-venda" class="btn-success"><i class="fas fa-check"></i> Finalizar Venda</button>
+                                    <button id="cancelar-venda" class="btn-danger"><i class="fas fa-times"></i> Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Página Estoque -->
+                <div class="page" id="estoque-page">
+                    <h1>Gerenciamento de Estoque</h1>
+                    <div class="estoque-container">
+                        <div class="estoque-actions">
+                            <button id="add-product" class="btn-primary"><i class="fas fa-plus"></i> Novo Produto</button>
+                            <div class="search-container">
+                                <input type="text" id="estoque-search" placeholder="Buscar produto...">
+                                <button id="estoque-search-btn"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="estoque-table">
+                            <table id="products-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Produto</th>
+                                        <th>Preço</th>
+                                        <th>Estoque</th>
+                                        <th>Categoria</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="products-body">
+                                    <!-- Produtos serão adicionados aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Página Relatórios -->
+                <div class="page" id="relatorios-page">
+                    <h1>Relatórios</h1>
+                    <div class="relatorios-container">
+                        <div class="report-filters">
+                            <div class="date-filter">
+                                <label for="date-start">Data Inicial:</label>
+                                <input type="date" id="date-start">
+                                <label for="date-end">Data Final:</label>
+                                <input type="date" id="date-end">
+                                <button id="filter-btn" class="btn-primary">Filtrar</button>
+                            </div>
+                        </div>
+                        <div class="report-cards">
+                            <div class="report-card">
+                                <h3>Total de Vendas</h3>
+                                <div class="report-value" id="total-vendas">R$ 0,00</div>
+                            </div>
+                            <div class="report-card">
+                                <h3>Qtd. Vendas</h3>
+                                <div class="report-value" id="qtd-vendas">0</div>
+                            </div>
+                            <div class="report-card">
+                                <h3>Ticket Médio</h3>
+                                <div class="report-value" id="ticket-medio">R$ 0,00</div>
+                            </div>
+                        </div>
+                        <div class="report-table">
+                            <h3>Últimas Vendas</h3>
+                            <table id="vendas-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Data/Hora</th>
+                                        <th>Valor</th>
+                                        <th>Pagamento</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vendas-body">
+                                    <!-- Vendas serão adicionadas aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Página Configurações -->
+                <div class="page" id="configuracoes-page">
+                    <h1>Configurações</h1>
+                    <div class="config-container">
+                        <div class="config-section">
+                            <h3>Configurações da Impressora</h3>
+                            <div class="form-group">
+                                <label for="printer-model">Modelo da Impressora:</label>
+                                <select id="printer-model">
+                                    <option value="epson">Epson TM-T20</option>
+                                    <option value="bematech">Bematech MP-4200</option>
+                                    <option value="daruma">Daruma DR800</option>
+                                    <option value="elgin">Elgin i9</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="printer-port">Porta:</label>
+                                <input type="text" id="printer-port" value="COM1">
+                            </div>
+                        </div>
+                        <div class="config-section">
+                            <h3>Configurações da Balança</h3>
+                            <div class="form-group">
+                                <label for="balanca-model">Modelo da Balança:</label>
+                                <select id="balanca-model">
+                                    <option value="toledo">Toledo Prix 3</option>
+                                    <option value="filizola">Filizola MF</option>
+                                    <option value="urano">Urano US 20/2</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="balanca-port">Porta:</label>
+                                <input type="text" id="balanca-port" value="COM2">
+                            </div>
+                        </div>
+                        <div class="config-section">
+                            <h3>Dados da Empresa</h3>
+                            <div class="form-group">
+                                <label for="empresa-nome">Nome da Empresa:</label>
+                                <input type="text" id="empresa-nome" value="Mercadinho Morezine">
+                            </div>
+                            <div class="form-group">
+                                <label for="empresa-cnpj">CNPJ:</label>
+                                <input type="text" id="empresa-cnpj">
+                            </div>
+                            <div class="form-group">
+                                <label for="empresa-endereco">Endereço:</label>
+                                <input type="text" id="empresa-endereco">
+                            </div>
+                        </div>
+                        <button id="save-config" class="btn-success">Salvar Configurações</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Balança -->
+    <div class="modal" id="balanca-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Produto com Balança</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="balanca-produto">Produto:</label>
+                    <select id="balanca-produto">
+                        <!-- Produtos serão carregados aqui -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="balanca-peso">Peso (kg):</label>
+                    <input type="number" id="balanca-peso" step="0.001">
+                    <button id="ler-balanca" class="btn-primary">Ler da Balança</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="add-balanca-item" class="btn-success">Adicionar ao Carrinho</button>
+                <button class="btn-secondary close-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Produto -->
+    <div class="modal" id="produto-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="produto-modal-title">Novo Produto</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="produto-form">
+                    <input type="hidden" id="produto-id">
+                    <div class="form-group">
+                        <label for="produto-codigo">Código:</label>
+                        <input type="text" id="produto-codigo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="produto-nome">Nome:</label>
+                        <input type="text" id="produto-nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="produto-preco">Preço:</label>
+                        <input type="number" id="produto-preco" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="produto-estoque">Estoque:</label>
+                        <input type="number" id="produto-estoque" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="produto-categoria">Categoria:</label>
+                        <select id="produto-categoria" required>
+                            <option value="alimentos">Alimentos</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="limpeza">Limpeza</option>
+                            <option value="higiene">Higiene</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="produto-balanca">Produto com Balança:</label>
+                        <input type="checkbox" id="produto-balanca">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="save-produto" class="btn-success">Salvar</button>
+                <button class="btn-secondary close-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pagamento -->
+    <div class="modal" id="pagamento-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Finalizar Venda</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="payment-info">
+                    <div class="payment-row">
+                        <span>Total da Compra:</span>
+                        <span id="modal-total" class="payment-value">R$ 0,00</span>
+                    </div>
+                    <div class="payment-row" id="dinheiro-row">
+                        <span>Valor Recebido:</span>
+                        <input type="number" id="valor-recebido" step="0.01">
+                    </div>
+                    <div class="payment-row" id="troco-row">
+                        <span>Troco:</span>
+                        <span id="troco-valor" class="payment-value">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmar-pagamento" class="btn-success">Confirmar e Imprimir</button>
+                <button class="btn-secondary close-modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+   
+        
+          <div id="recibo" style="display: none;">
+            <h1>Recibo</h1>
+            <p>Estada: da Fonte Santa km 81 Lote: 7
+              N°: 954 Casa 4 Fonte Santa: Teresópolis RJ: Brasil.
+            </p>
+            <p>Data: <span id="data-hora"></span></p>
+            <hr>
+            <p>--------------------------</p>
+            <p>🍞 Pão francês - R$ 3,00</p>
+            <p>🥛 Leite - R$ 5,50</p>
+            <p>🍎 Maçã - R$ 4,20</p>
+        
+            <hr>
+            <p>---------------------------</p>
+            <strong>Total: R$ 12,70</strong>
+            <p>Volte sempre! 😊</p>
+          </div>
+          <script src="app.js"></script>
+          </body>
+        </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="js/app.js"></script>
+</body>
+
+</html>
