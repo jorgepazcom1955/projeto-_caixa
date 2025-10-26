@@ -51,7 +51,7 @@ button {
 }
 
 .btn-primary:hover {
-  background-color: #0b7dda;
+  background-color: #4CAF50;
 }
 
 .btn-success {
@@ -319,7 +319,7 @@ tbody td {
 .payment-btn {
   padding: 10px;
   text-align: center;
-  background-color: #f5f5f5;
+  background-color: #2196F3;
   border: 1px solid #ddd;
   border-radius: 4px;
   cursor: pointer;
