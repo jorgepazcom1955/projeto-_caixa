@@ -46,12 +46,12 @@ button {
 }
 
 .btn-primary {
-  background-color: #4CAF50;
+  background-color: #2196F3;
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: #45a049;
+  background-color: #0b7dda;
 }
 
 .btn-success {
@@ -331,9 +331,9 @@ tbody td {
 }
 
 .payment-btn.active {
-  background-color: #4CAF50;
+  background-color: #2196F3;
   color: white;
-  border-color: #4CAF50;
+  border-color: #070be7;
 }
 
 .action-buttons {
