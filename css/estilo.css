@@ -315,13 +315,13 @@ tbody td {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   color: #007bff;
-  background-color: #2196F3;
+  
 }
 
 .payment-btn {
   padding: 10px;
   text-align: center;
-  background-color: #2196F3;
+
   border: 1px solid #06e724;
   border-radius: 4px;
   cursor: pointer;
