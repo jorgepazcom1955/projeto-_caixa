@@ -314,25 +314,27 @@ tbody td {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  color: #007bff;
+  background-color: #2196F3;
 }
 
 .payment-btn {
   padding: 10px;
   text-align: center;
   background-color: #2196F3;
-  border: 1px solid #ddd;
+  border: 1px solid #06e724;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .payment-btn:hover {
-  background-color: #e0e0e0;
+  background-color: #c5b8b8;
 }
 
 .payment-btn.active {
-  background-color: #2196F3;
-  color: white;
+  background-color: #25f50a;
+  color: rgb(223, 212, 212);
   border-color: #070be7;
 }
 
