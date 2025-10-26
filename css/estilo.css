@@ -333,7 +333,7 @@ tbody td {
 }
 
 .payment-btn.active {
-  background-color: #25f50a;
+  
   color: rgb(223, 212, 212);
   border-color: #070be7;
 }
